@@ -24,24 +24,25 @@ void addGoalToStadium1(int minute, int playerID)
 
 void addGoalToStadium2(int minute, int playerID)
 {
-    if (goalCount[2] >= MAX_GOALS)
+    if (goalCount[2] < MAX_GOALS)
+    {
+        goals[2][goalCount[2]] = minute;
+        playerGoals[playerID]++;
+        goalCount[2]++;
+    }
+    else
     {
         printf("Stadium 2 is full\n");
-        return;
     }
-
-    goals[2][goalCount[2]] = minute;
-    playerGoals[playerID]++;
-    goalCount[2]++;
 }
 
 int totalGoals()
 {
     int total = 0;
 
-    for (int s = 0; s < STADIUMS; s++)
+    for (int i = 0; i < STADIUMS; i++)
     {
-        total += goalCount[s];
+        total += goalCount[i];
     }
 
     return total;
@@ -49,14 +50,13 @@ int totalGoals()
 
 int topScorer()
 {
-    int maxG = 0, winner = 0;
+    int winner = 0;
 
-    for (int p = 0; p < PLAYERS; p++)
+    for (int i = 1; i < PLAYERS; i++)
     {
-        if (playerGoals[p] > maxG)
+        if (playerGoals[i] > playerGoals[winner])
         {
-            maxG = playerGoals[p];
-            winner = p;
+            winner = i;
         }
     }
 
@@ -73,15 +73,12 @@ void displayStadium(int stadium)
 
 int main()
 {
-    // Stadium 0 goals
     addGoalToStadium0(15, 2);
     addGoalToStadium0(42, 2);
 
-    // Stadium 1 goals
     addGoalToStadium1(8, 1);
     addGoalToStadium1(67, 1);
 
-    // Stadium 2 goals
     addGoalToStadium2(23, 2);
     addGoalToStadium2(55, 2);
     addGoalToStadium2(80, 3);
@@ -91,15 +88,12 @@ int main()
 
     printf("Stadium 0 goals: ");
     displayStadium(0);
-    printf("\n");
 
-    printf("Stadium 1 goals: ");
+    printf("\nStadium 1 goals: ");
     displayStadium(1);
-    printf("\n");
 
-    printf("Stadium 2 goals: ");
+    printf("\nStadium 2 goals: ");
     displayStadium(2);
-    printf("\n");
 
     return 0;
 }
