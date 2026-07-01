@@ -1,7 +1,6 @@
 class ListNode {
     int val;
     ListNode next;
-    ListNode prev;
 }
 public class Question2 {
     public boolean hasCycle(ListNode h) {
